@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-uppercase h1p">Kainynas</h1>
+
+<div class="card" style="background-color: rgba(245, 245, 245, 0.8);">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Pavadinimas</th>
+        <th scope="col" class="text-center">Kaina, €</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for a in kainynas %}
+      <tr>
+        <td>{{a.pavadinimas}}</td>
+        <td class="text-center">{{a.kaina}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

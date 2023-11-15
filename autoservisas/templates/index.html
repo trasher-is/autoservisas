@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-uppercase h1p">Statistika</h1>
+  <h4>Čia jūs lankotes {{ num_visits }}-ą kartą.</h4>
+  <h5 class="mt-3">Šiuo metu turime:</h5>
+<div class="row">
+    <div class="col-md-3">
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5>Automobiliai:</h5>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-dark">Iš viso: <span class="h3">{{ automobiliu_kiekis }}</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5>Klientai:</h5>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-dark">Iš viso: <span class="h3">{{ klientu_kiekis }}</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5>Užsakymai:</h5>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-dark">Iš viso: <span class="h3">{{ uzsakymu_kiekis }}</span></li>
+          <li class="list-group-item list-group-item-success">Baigti: <span class="h3">{{ atlikti_uzsakymai }}</span></li>
+          <li class="list-group-item list-group-item-dark">Vykdomi: <span class="h3">{{ vykdomi_uzsakymai }}</span></li>
+          <li class="list-group-item list-group-item-dark">Rezervuota: <span class="h3">{{ laukiami_uzsakymai }}</span></li>
+          <li class="list-group-item list-group-item-danger">Atšaukta: <span class="h3">{{ atsaukti_uzsakymai }}</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5>Paslaugos:</h5>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-dark">Iš viso: <span class="h3">{{ paslaugu_kiekis }}</span></li>
+        </ul>
+      </div>
+    </div>
+</div>
+{% endblock %}

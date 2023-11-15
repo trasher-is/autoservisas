@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<div class="card p-5" style="background-color: rgba(245, 245, 245, 0.8);">
+  {% if form.errors %}
+    <p>Prisijungimo klaida, bandykite dar kartą!</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Neturite prieigos prie šios informacijos. Turite prisijungti.</p>
+    {% endif %}
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Vartotojas:</label>
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      <label for="{{ form.password.id_for_label }}">Slaptažodis:</label>
+      {{ form.password }}
+    </div>
+    <input type="submit" value="Prisijungti" class="btn btn-secondary btn-sm" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+  <p><a href="{% url 'password_reset' %}">Pamiršote slaptažodį?</a></p>
+</div>
+
+{% endblock %}

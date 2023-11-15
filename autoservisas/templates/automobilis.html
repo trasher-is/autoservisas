@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="card shadow-lg p-1 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.8);">
+  <div class="card-body mx-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 border-right border-success">
+                {% if automobilis.nuotrauka %}
+                    <img src="{{ automobilis.nuotrauka.url }}" class="img-fluid">
+                {% else %}
+                    <img src="{% static 'img/no-image.png' %}" class="img-fluid">
+                {% endif %}
+            </div>
+            <div class="col-md-4 my-auto">
+
+                <ul class="list-unstyled">
+                    <li class="text-black"><span class="text-muted">Savininkas: </span>{{automobilis.klientas}}</li>
+                    <li class="text-black"><span class="text-muted">Valst. Nr.: </span>{{automobilis.valstybinis_nr}}</li>
+                    <li class="text-black"><span class="text-muted">Gamintojas: </span>{{automobilis.automobilio_modelis_id.marke}}</li>
+                    <li class="text-black"><span class="text-muted">Modelis: </span>{{automobilis.automobilio_modelis_id.modelis}}</li>
+                    <li class="text-black"><span class="text-muted">VIN kodas: </span>{{automobilis.vin_kodas}}</li>
+                </ul>
+            </div>
+            <div class="col-md-6 my-auto">
+                <p>{{ automobilis.aprasymas | safe }}</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div>
+    <a class="nav-link text-secondary" href="{% url 'automobiliai' %}"><<< Atgal</a>
+</div>
+
+{% endblock %}

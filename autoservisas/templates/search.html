@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-uppercase h1p">Paieškos pagal "{{query}}" rezultatai:</h1>
+
+    {% if automobiliu_paieska %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Valst. Nr.</th>
+                    <th scope="col">Modelis</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+        <tbody>
+        {% for a in automobiliu_paieska %}
+            <tr>
+                <td>{{a.valstybinis_nr}}</td>
+                <td>{{a.automobilio_modelis_id}}</td>
+                <td><a href="{% url 'automobilis' a.id %}"><button type="button" class="btn btn-secondary btn-sm">Detaliau</button></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+    <p>Oops. Nieko neradome :(</p>
+    {% endif %}
+
+{% endblock %}

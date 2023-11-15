@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card shadow-lg p-1 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
+  <div class="card-body mx-4">
+    <div class="container">
+      <div class="row">
+        <ul class="list-unstyled">
+            <li class="text-muted">Užsakymas Nr. {{uzsakymas.id}}</li>
+            <li class="text-black">{{uzsakymas.automobilis_id.klientas}}</li>
+            <li class="text-black">{{uzsakymas.data|date:"Y-d-m"}}</li>
+            <li class="text-black {% if uzsakymas.statusas == 'u' %}text-success{% elif uzsakymas.statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{uzsakymas.get_statusas_display}}</li>
+            <li class="text-black mt-3"><span class="text-muted">Valst. Nr.: </span>{{uzsakymas.automobilis_id.valstybinis_nr}}</li>
+            <li class="text-black"><span class="text-muted">Modelis: </span>{{uzsakymas.automobilis_id.automobilio_modelis_id}}</li>
+            <li class="text-black"><span class="text-muted">VIN: </span>{{uzsakymas.automobilis_id.vin_kodas}}</li>
+        </ul>
+      </div>
+      <div class="mt-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Paslaugos pavadinimas</th>
+                    <th scope="col" class="text-center">Kaina</th>
+                    <th scope="col" class="text-center">Kiekis</th>
+                    <th scope="col" class="text-center">Viso</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for a in uzsakymas.uzsakymoeilute_set.all %}
+                <tr>
+                    <td>{{a.paslauga_id.pavadinimas}}</td>
+                    <td class="text-center">{{a.paslauga_id.kaina}}</td>
+                    <td class="text-center">{{a.kiekis}}</td>
+                    <td class="text-center">{{a.viso_eilute}}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <th colspan="3" scope="col" class="text-right text-muted">IŠ VISO:</th>
+                    <th class="text-center text-muted">{{uzsakymas.is_viso}}</th>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    <a class="nav-link text-primary" href="{% url 'uzsakymai' %}"><<< Atgal</a>
+</div>
+
+{% endblock %}
