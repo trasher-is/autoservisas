@@ -32,41 +32,43 @@
     </tbody>
   </table>
 
-  <nav aria-label="...">
-    <ul class="pagination justify-content-center">
-      {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Atgal</a>
-        </li>
-      {% else %}
-        <li class="page-item">
-          <a class="page-link disabled">Atgal</a>
-        </li>
-      {% endif %}
+    {% if page_obj.paginator.num_pages > 1 %}
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Atgal</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link disabled">Atgal</a>
+            </li>
+          {% endif %}
 
-      {% for i in page_obj.paginator.page_range %}
-        {% if page_obj.number == i %}
-          <li class="page-item active">
-            <a class="page-link">{{ i }}</a>
-          </li>
-        {% else %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
+          {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+              <li class="page-item active">
+                <a class="page-link">{{ i }}</a>
+              </li>
+            {% else %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
 
-      {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Toliau</a>
-        </li>
-      {% else %}
-        <li class="page-item">
-          <a class="page-link disabled">Toliau</a>
-        </li>
-      {% endif %}
-    </ul>
-  </nav>
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Toliau</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link disabled">Toliau</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+   {% endif %}
 </div>
 {% else %}
       <p>Šiuo metu mūsų autoservise užsakymų neturite.</p>

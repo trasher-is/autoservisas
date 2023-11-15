@@ -34,7 +34,7 @@ def index(request):
 
 
 def automobiliai(request):
-    paginator = Paginator(Automobilis.objects.all(), 5)
+    paginator = Paginator(Automobilis.objects.all(), 8)
     page_number = request.GET.get('page')
     visi_automobiliai = paginator.get_page(page_number)
     context = {
@@ -54,7 +54,7 @@ def kainynas(request):
 class UzsakymaiListView(generic.ListView):
     model = Uzsakymas
     context_object_name = 'uzsakymai_list'
-    paginate_by = 5
+    paginate_by = 10
     template_name = 'uzsakymai.html'
 
 
@@ -100,7 +100,7 @@ class KlientoUzsakymaiListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     context_object_name = 'klientouzsakymai_list'
     template_name = 'mano_uzsakymai.html'
-    paginate_by = 5
+    paginate_by = 10
 
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('grazinimo_terminas')
