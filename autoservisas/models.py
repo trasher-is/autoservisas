@@ -43,7 +43,7 @@ class Automobilis(models.Model):
 class Uzsakymas(models.Model):
     # uzsakymas kuriame gali buti daug uzsakymo eiluciu
     data = models.DateField('Užsakymo data', null=False)
-    automobilis_id = models.ForeignKey('Automobilis', verbose_name='Informacija', on_delete=models.CASCADE, null=False)
+    automobilis_id = models.ForeignKey('Automobilis', verbose_name='Informacija', on_delete=models.CASCADE, null=False, related_name='auto_statusas')
 
     UZSAKYMO_STATUSAS = (
         ('l', 'Laukiama automobilio'),
@@ -61,7 +61,7 @@ class Uzsakymas(models.Model):
         verbose_name_plural = 'Užsakymai'
 
     def __str__(self):
-        return f'{self.data}: {self.automobilis_id}'
+        return f'{self.data}: {self.automobilis_id}.'
 
     @property
     def is_viso(self):

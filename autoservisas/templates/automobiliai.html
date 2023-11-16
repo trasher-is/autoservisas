@@ -20,7 +20,7 @@
             {{a.valstybinis_nr}}
           </h3>
           <p class="card-text">{{a.automobilio_modelis_id}}</p>
-          <p class="{% if a.uzsakymas__statusas == 'u' %}text-success{% elif a.uzsakymas__statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{a.uzsakymas__get_statusas_display}}</p>
+          <p class="{% if a.auto_statusas.first.statusas == 'u' %}text-success{% elif a.auto_statusas.first.statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{ a.auto_statusas.first.get_statusas_display }}</p>
           <a href="{% url 'automobilis' a.id %}"><button type="button" class="btn btn-secondary btn-sm">Detaliau</button></a>
         </div>
       </div>
