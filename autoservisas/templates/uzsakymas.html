@@ -47,4 +47,32 @@
     <a class="nav-link text-primary" href="#" onClick="history.go(-1)"><<< Atgal</a>
 </div>
 
+<div class="card shadow-lg p-0 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
+    <div class="row px-3">
+        <div class="col-md-6 p-3">
+            <h5>Kliento atsiliepimai:</h5>
+            {% if uzsakymas.uzsakymasreview_set.all %}
+            {% for review in uzsakymas.uzsakymasreview_set.all %}
+            <hr>
+            <p><strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created|date:"Y-m-d H:i:s" }}</em></p>
+            <p>{{ review.atsiliepimo_tekstas }}</p>
+            {% endfor %}
+            {% else %}
+            <p>Užsakymas neturi atsiliepimų</p>
+            {% endif %}
+        </div>
+        <div class="col-md-6 p-3">
+            {% if user.is_authenticated and user == uzsakymas.vartotojas %}
+            <h5 class="mb-3">Palikite atsiliepimą:</h5>
+            <form action="" method="post">
+            {% csrf_token %}
+            {{ form.atsiliepimo_tekstas }}
+            <input type="submit" value="Išsaugoti" class="btn btn-secondary btn-md submit-button mt-2">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

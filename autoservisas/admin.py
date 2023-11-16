@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AutomobilioModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga
+from .models import AutomobilioModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga, UzsakymasReview
 
 # Register your models here.
 
@@ -28,8 +28,13 @@ class UzsakymasAdmin(admin.ModelAdmin):
     inlines = [UzsakymasInstance]
 
 
+class UzsakymasReviewAdmin(admin.ModelAdmin):
+    list_display = ('uzsakymas_review_id', 'date_created', 'reviewer', 'atsiliepimo_tekstas')
+
+
 admin.site.register(AutomobilioModelis)
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(UzsakymoEilute, UzsakymoEiluteAdmin)
 admin.site.register(Paslauga, PaslaugaAdmin)
+admin.site.register(UzsakymasReview, UzsakymasReviewAdmin)

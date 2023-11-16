@@ -70,7 +70,7 @@
                         <i class="fa fa-shopping-cart"></i>
                         Mano užsakymai
                     </a>
-                    <a class="dropdown-item text-dark drop-item" href="{% url 'logout'%}">
+                    <a class="dropdown-item text-dark drop-item" href="{% url 'logout' %}">
                         <i class="fa fa-sign-out"></i>
                         Atsijungti
                     </a>
@@ -87,7 +87,7 @@
                         <i class="fa fa-sign-in"></i>
                         Prisijungti
                     </a>
-                    <a class="dropdown-item text-dark drop-item" href="{% url 'uzsakymai' %}">
+                    <a class="dropdown-item text-dark drop-item" href="{% url 'register' %}">
                         <i class="fa fa-plus-circle"></i>
                         Registruotis
                     </a>
@@ -104,7 +104,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6 px-5">{% block content %}{% endblock %}</div>
+            <div class="col-md-6 px-5">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}</div>
             <div class="col-md-3"></div>
         </div>
     </div>

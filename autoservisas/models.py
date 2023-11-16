@@ -43,7 +43,8 @@ class Automobilis(models.Model):
 class Uzsakymas(models.Model):
     # uzsakymas kuriame gali buti daug uzsakymo eiluciu
     data = models.DateField('Užsakymo data', null=False)
-    automobilis_id = models.ForeignKey('Automobilis', verbose_name='Informacija', on_delete=models.CASCADE, null=False, related_name='auto_statusas')
+    automobilis_id = models.ForeignKey('Automobilis', verbose_name='Informacija',
+                                       on_delete=models.CASCADE, null=False, related_name='auto_statusas')
 
     UZSAKYMO_STATUSAS = (
         ('l', 'Laukiama automobilio'),
@@ -111,3 +112,15 @@ class Paslauga(models.Model):
 
     def __str__(self):
         return f'{self.pavadinimas}'
+
+
+class UzsakymasReview(models.Model):
+    uzsakymas_review_id = models.ForeignKey('Uzsakymas', on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    atsiliepimo_tekstas = models.TextField('Atsiliepimas', max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']

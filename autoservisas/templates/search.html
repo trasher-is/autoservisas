@@ -4,6 +4,7 @@
     <h1 class="text-uppercase h1p">Paieškos pagal "{{query}}" rezultatai:</h1>
 
     {% if automobiliu_paieska %}
+    <div class="card" style="background-color: rgba(245, 245, 245, 0.8);">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -24,6 +25,7 @@
         </table>
     {% else %}
     <p>Oops. Nieko neradome :(</p>
+    </div>
     {% endif %}
 
 {% endblock %}
