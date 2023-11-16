@@ -18,4 +18,8 @@ added lessons 1 to 8 all together
   - register view function and template
 - fixed css styling of login and pass reset forms
 - added ability for user to leave comments on his orders
+    - created review form
+    - created review model
+    - added reviews to orders page
+    - some css styling
 - some css and html cleanup
