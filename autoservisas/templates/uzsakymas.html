@@ -9,7 +9,7 @@
         <ul class="list-unstyled">
             <li class="text-muted">Užsakymas Nr. {{uzsakymas.id}}</li>
             <li class="text-black">{{uzsakymas.automobilis_id.klientas}}</li>
-            <li class="text-black">{{uzsakymas.data|date:"Y-d-m"}}</li>
+            <li class="text-black">{{uzsakymas.data|date:"Y-m-d"}}</li>
             <li class="text-black {% if uzsakymas.statusas == 'u' %}text-success{% elif uzsakymas.statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{uzsakymas.get_statusas_display}}</li>
             <li class="text-black mt-3"><span class="text-muted">Valst. Nr.: </span>{{uzsakymas.automobilis_id.valstybinis_nr}}</li>
             <li class="text-black"><span class="text-muted">Modelis: </span>{{uzsakymas.automobilis_id.automobilio_modelis_id}}</li>
@@ -53,22 +53,46 @@
             <h5>Kliento atsiliepimai:</h5>
             {% if uzsakymas.uzsakymasreview_set.all %}
             {% for review in uzsakymas.uzsakymasreview_set.all %}
-            <hr>
-            <p><strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created|date:"Y-m-d H:i:s" }}</em></p>
-            <p>{{ review.atsiliepimo_tekstas }}</p>
-            {% endfor %}
+                {% if review.reviewer.username == 'admin' %}
+                    <div class="mx-3">
+                        <hr>
+                        <div class="row d-flex justify-content-end align-items-center">
+                            <img class="rounded mr-3" width="50" src="{{review.reviewer.profilis.nuotrauka.url}}">
+                            <p class="pt-3"><strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created|date:"Y-m-d H:i:s" }}</em></p>
+                        </div>
+                        <div class="row justify-content-end mt-3">
+                            <p>{{ review.atsiliepimo_tekstas }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="mx-3">
+                        <hr>
+                        <div class="row align-items-center">
+                            <img class="rounded mr-3" width="50" src="{{review.reviewer.profilis.nuotrauka.url}}">
+                            <p class="pt-3"><strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created|date:"Y-m-d H:i:s" }}</em></p>
+                        </div>
+                        <div class="row mt-3">
+                            <p>{{ review.atsiliepimo_tekstas }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
             {% else %}
             <p>Užsakymas neturi atsiliepimų</p>
             {% endif %}
         </div>
         <div class="col-md-6 p-3">
-            {% if user.is_authenticated and user == uzsakymas.vartotojas %}
+            {% if user.is_authenticated and user == uzsakymas.vartotojas or user.username == 'admin' %}
             <h5 class="mb-3">Palikite atsiliepimą:</h5>
             <form action="" method="post">
             {% csrf_token %}
             {{ form.atsiliepimo_tekstas }}
             <input type="submit" value="Išsaugoti" class="btn btn-secondary btn-md submit-button mt-2">
             </form>
+            {% else %}
+            <div class="d-flex align-items-center justify-content-center p-0 m-0 h-100 w-100">
+                <h5 class="m-auto px-5 text-secondary">Atsiliepimus galima palikti tik prisijungus ir tik prie savo užsakymų.</h5>
+            </div>
             {% endif %}
         </div>
     </div>

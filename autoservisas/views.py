@@ -7,10 +7,12 @@ from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 # Create your views here.
-from .models import Automobilis, Uzsakymas, Paslauga
-from .forms import UzsakymasReviewForm
+from .models import Automobilis, Uzsakymas, Paslauga, Profilis
+from .forms import UzsakymasReviewForm, UserUpdateForm, ProfilisUpdateForm
 
 
 def index(request):
@@ -158,3 +160,30 @@ class UzsakymasDetailView(FormMixin, generic.DetailView):
         form.instance.reviewer = self.request.user
         form.save()
         return super(UzsakymasDetailView, self).form_valid(form)
+
+
+
+@login_required
+def profilis(request):
+    return render(request, 'profilis.html')
+
+
+@login_required
+def profilis(request):
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfilisUpdateForm(request.POST, request.FILES, instance=request.user.profilis)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Profilis atnaujintas")
+            return redirect('profilis')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfilisUpdateForm(instance=request.user.profilis)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'profilis.html', context)

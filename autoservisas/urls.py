@@ -12,5 +12,6 @@ urlpatterns = [
     path('uzsakymai/<int:pk>', views.UzsakymasDetailView.as_view(), name='uzsakymas'),
     path('automobiliai/<int:automobilis_id>', views.automobilis, name='automobilis'),
     path('search/', views.search, name='search'),
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    path('profilis/', views.profilis, name='profilis'),
 ]

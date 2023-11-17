@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AutomobilioModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga, UzsakymasReview
+from .models import AutomobilioModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga, UzsakymasReview, Profilis
 
 # Register your models here.
 
@@ -38,3 +38,4 @@ admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(UzsakymoEilute, UzsakymoEiluteAdmin)
 admin.site.register(Paslauga, PaslaugaAdmin)
 admin.site.register(UzsakymasReview, UzsakymasReviewAdmin)
+admin.site.register(Profilis)

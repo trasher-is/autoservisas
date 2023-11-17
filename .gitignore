@@ -1,5 +1,5 @@
-*.log
 db.sqlite3
 venv/
 .idea/
 __pycache__/
+migrations/

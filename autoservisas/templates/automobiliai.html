@@ -9,12 +9,13 @@
   <div class="row">
     {% for a in visi_automobiliai %}
     <div class="col-md-3 px-2 pb-3">
-      <div class="card shadow-lg m-1 text-center" style="background-color: rgba(245, 245, 245, 0.95);">
+      <div class="card shadow-lg m-1 text-center" style="background-color: rgba(245, 245, 245, 0.95); position: relative;">
         {% if a.nuotrauka %}
             <img src="{{ a.nuotrauka.url }}" class="card-img-top rounded shadow-lg">
           {% else %}
             <img src="{% static 'img/no-image.png' %}" class="card-img-top rounded shadow-lg">
           {% endif %}
+        <img class="rounded-circle mr-3 shadow" style="position: absolute; top: 260px; left: -10px; width: 100px;" src="{{a.auto_statusas.first.vartotojas.profilis.nuotrauka.url}}">
         <div class="card-body">
           <h3 class="card-title">
             {{a.valstybinis_nr}}
