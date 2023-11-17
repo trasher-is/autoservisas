@@ -23,3 +23,17 @@ added lessons 1 to 8 all together
     - added reviews to orders page
     - some css styling
 - some css and html cleanup
+
+## lesson 10
+- added user profile
+  -ability to change name
+  -ability to change email
+  -abiliety to chamge profile picture
+- added signals.py to check if user is created and save his profile and to check if profile is created to save user
+- model for profile added
+- profile update form added
+- added profile pictures to orders comments
+- only user who's order can comment and admin
+  - admin can comment on all orders
+  - admins comments are css aligned right
+- added profile picture to 'automobilis' template (bad css styling need to learn how to do that without absolute positioning)
