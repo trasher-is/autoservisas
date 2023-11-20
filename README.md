@@ -1,4 +1,4 @@
-# autoservisas | Django mokymai
+# autoservisas
 
 ## First commit
 added lessons 1 to 8 all together
