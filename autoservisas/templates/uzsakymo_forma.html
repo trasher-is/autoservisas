@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 {% block content %}
-<h1 class="text-uppercase h1p">Užsakymas</h1>
+<h1 class="text-uppercase h1p">{% trans 'Order' %}</h1>
 <div class="card shadow-lg p-1 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
     <div class="container justify-content-center my-5">
         <form method="POST" action="" enctype="multipart/form-data">
@@ -10,13 +11,13 @@
         <fieldset class="form-group">
         <input type="hidden" name="vartotojas" id="id_vartotojas">
         <div id="div_id_automobilis_id" class="form-group">
-            <label class="">Pasirinkite automobilį</label>
+            <label class="">{% trans 'Choose a car' %}</label>
             <div>
                 {{ form.automobilis_id }}
             </div>
         </div>
         <div id="div_id_grazinimo_terminas" class="form-group">
-            <label class="">Pasirinkite pageidaujamą atlikimo datą</label>
+            <label class="">{% trans 'Choose order completion date' %}</label>
             <div>
                 {{ form.grazinimo_terminas }}
             </div>
@@ -24,7 +25,7 @@
 
         </fieldset>
         <div class="form-group">
-            <button type="submit" class="btn btn-secondary btn-md register-button">Išsaugoti</button>
+            <button type="submit" class="btn btn-secondary btn-md register-button">{% trans 'Save' %}</button>
         </div>
     </form>
     </div>

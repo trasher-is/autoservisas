@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-<h1 class="text-uppercase h1p">Užsakymai</h1>
+<h1 class="text-uppercase h1p">{% trans 'Orders' %}</h1>
 
 <div class="card" style="background-color: rgba(245, 245, 245, 0.9);">
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Užsakymo data</th>
-        <th scope="col">Klientas</th>
-        <th scope="col">Automobilis</th>
-        <th scope="col">Statusas</th>
-        <th scope="col">Atlikimo data</th>
+        <th scope="col">{% trans 'Order date' %}</th>
+        <th scope="col">{% trans 'Client' %}</th>
+        <th scope="col">{% trans 'Car' %}</th>
+        <th scope="col">{% trans 'Status' %}</th>
+        <th scope="col">{% trans 'Completion date' %}</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -24,48 +24,50 @@
         <td>{{a.automobilis_id.automobilio_modelis_id}}</td>
         <td class="{% if a.statusas == 'u' %}text-success{% elif a.statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{a.get_statusas_display}}</td>
         <td>{{a.grazinimo_terminas|date:"Y-m-d"}}</td>
-        <td><a href="{% url 'uzsakymas' a.id %}"><button type="button" class="btn btn-secondary btn-sm">Detaliau</button></a></td>
+        <td><a href="{% url 'uzsakymas' a.id %}"><button type="button" class="btn btn-secondary btn-sm">{% trans 'Details' %}</button></a></td>
       </tr>
 
     {% endfor %}
     </tbody>
   </table>
 
-  <nav aria-label="...">
-    <ul class="pagination justify-content-center">
-      {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Atgal</a>
-        </li>
-      {% else %}
-        <li class="page-item">
-          <a class="page-link disabled">Atgal</a>
-        </li>
-      {% endif %}
+{% if page_obj.paginator.num_pages > 1 %}
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans 'Back' %}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link disabled">{% trans 'Back' %}</a>
+            </li>
+          {% endif %}
 
-      {% for i in page_obj.paginator.page_range %}
-        {% if page_obj.number == i %}
-          <li class="page-item active">
-            <a class="page-link">{{ i }}</a>
-          </li>
-        {% else %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
+          {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+              <li class="page-item active">
+                <a class="page-link">{{ i }}</a>
+              </li>
+            {% else %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
 
-      {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Toliau</a>
-        </li>
-      {% else %}
-        <li class="page-item">
-          <a class="page-link disabled">Toliau</a>
-        </li>
-      {% endif %}
-    </ul>
-  </nav>
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans 'Next' %}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link disabled">{% trans 'Next' %}</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+   {% endif %}
 </div>
 
 {% endblock %}

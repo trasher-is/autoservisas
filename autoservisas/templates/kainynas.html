@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-<h1 class="text-uppercase h1p">Kainynas</h1>
+<h1 class="text-uppercase h1p">{% trans 'Price-list' %}</h1>
 
 <div class="card" style="background-color: rgba(245, 245, 245, 0.8);">
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Pavadinimas</th>
-        <th scope="col" class="text-center">Kaina, €</th>
+        <th scope="col">{% trans 'Name' %}</th>
+        <th scope="col" class="text-center">{% trans 'Price, €' %}</th>
       </tr>
     </thead>
     <tbody>

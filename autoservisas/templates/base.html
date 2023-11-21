@@ -15,9 +15,11 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" href="{% static 'img/favicon.ico' %}">
+    {% load i18n %}
 </head>
 
 <body>
+
 <div style="background-image: url({% static 'img/index_bg.png' %})" class="container-fluid bg-cover p-0">
     <nav class="navbar navbar-dark navbar-expand-lg flex-md-nowrap p-3 justify-content-center">
         {% block nav %}
@@ -26,32 +28,32 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{% url 'index' %}">
                         <i class="fa fa-pie-chart"></i>
-                        Pagrindinis
+                        {% trans 'Main' %}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{% url 'kainynas' %}">
                         <i class="fa fa-address-card"></i>
-                        Paslaugų kainynas
+                        {% trans 'Price-list' %}
                     </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-info-circle"></i>
-                        Informacija
+                        {% trans 'Information' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                     <a class="dropdown-item text-dark drop-item" href="{% url 'automobiliai' %}">
                         <i class="fa fa-car"></i>
-                        Visi automobiliai
+                        {% trans 'All cars' %}
                     </a>
                     <a class="dropdown-item text-dark drop-item" href="{% url 'uzsakymai' %}">
                         <i class="fa fa-address-book"></i>
-                        Visi uzsakymai
+                        {% trans 'All orders' %}
                     </a>
                     <a class="dropdown-item text-dark drop-item" href="{% url 'klientai' %}">
                         <i class="fa fa-users"></i>
-                        Visi klientai
+                        {% trans 'All clients' %}
                     </a>
                     </div>
                 </li>
@@ -64,19 +66,19 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                     <a class="dropdown-item text-dark drop-item" href="{% url 'profilis' %}">
                         <i class="fa fa-user-circle-o"></i>
-                        Mano profilis
+                        {% trans 'My profile' %}
                     </a>
                     <a class="dropdown-item text-dark drop-item" href="{% url 'mano_uzsakymai' %}">
                         <i class="fa fa-shopping-cart"></i>
-                        Mano užsakymai
+                        {% trans 'My orders' %}
                     </a>
                     <a class="dropdown-item text-dark drop-item" href="{% url 'naujas_uzsakymas' %}?next=/uzsakymai">
                         <i class="fa fa-cart-plus"></i>
-                        Naujas užsakymas
+                        {% trans 'New order' %}
                     </a>
                     <a class="dropdown-item text-dark drop-item" href="{% url 'logout' %}">
                         <i class="fa fa-sign-out"></i>
-                        Atsijungti
+                        {% trans 'Logout' %}
                     </a>
                     </div>
                 </li>
@@ -84,23 +86,39 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-circle"></i>
-                        Prisijungti
+                        {% trans 'Login/register' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
                     <a class="dropdown-item text-dark drop-item" href="{% url 'login'%}?next={{request.path}}">
                         <i class="fa fa-sign-in"></i>
-                        Prisijungti
+                        {% trans 'Login' %}
                     </a>
                     <a class="dropdown-item text-dark drop-item" href="{% url 'register' %}">
                         <i class="fa fa-plus-circle"></i>
-                        Registruotis
+                        {% trans 'Register' %}
                     </a>
                     </div>
                 </li>
                 {% endif %}
             </ul>
+
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                <select name="language">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected" {% endif %}>
+                {{ lang.1 }} ({{ lang.0 }})
+                </option>
+                {% endfor %}
+                </select>
+                <input type="submit" value="{% trans 'Change' %}"/>
+            </form>
+
             <form action="{% url 'search' %}" method="get">
-            <input name="query" class="form-control form-control-dark w-100" type="text" placeholder="Paieška" aria-label="Search">
+            <input name="query" class="form-control form-control-dark w-100" type="text" placeholder="{% trans 'Search' %}" aria-label="Search">
             </form>
         {% endblock %}
     </nav>

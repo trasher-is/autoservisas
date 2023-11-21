@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-    <h1 class="text-uppercase h1p">Paieškos pagal "{{query}}" rezultatai:</h1>
+    <h1 class="text-uppercase h1p">{% trans 'Search for ' %}"{{query}}"{% trans ' results:' %}</h1>
 
     {% if automobiliu_paieska %}
     <div class="card" style="background-color: rgba(245, 245, 245, 0.8);">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Valst. Nr.</th>
-                    <th scope="col">Modelis</th>
+                    <th scope="col">{% trans 'Plate #' %}</th>
+                    <th scope="col">{% trans 'Model' %}</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -18,13 +18,13 @@
             <tr>
                 <td>{{a.valstybinis_nr}}</td>
                 <td>{{a.automobilio_modelis_id}}</td>
-                <td><a href="{% url 'automobilis' a.id %}"><button type="button" class="btn btn-secondary btn-sm">Detaliau</button></a></td>
+                <td><a href="{% url 'automobilis' a.id %}"><button type="button" class="btn btn-secondary btn-sm">{% trans 'Details' %}</button></a></td>
             </tr>
         {% endfor %}
         </tbody>
         </table>
     {% else %}
-    <p>Oops. Nieko neradome :(</p>
+    <p>{% trans "Oops. Didn't find anything :(" %}</p>
     </div>
     {% endif %}
 

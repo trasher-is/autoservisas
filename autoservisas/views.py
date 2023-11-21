@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _
 
 # Create your views here.
 from .models import Automobilis, Uzsakymas, Paslauga, UzsakymoEilute
@@ -116,20 +117,20 @@ def register(request):
         if password == password2:
             # tikriname, ar neužimtas username
             if User.objects.filter(username=username).exists():
-                messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                messages.error(request,  _('Username %s already exists!') % username)
                 return redirect('register')
             else:
                 # tikriname, ar nėra tokio pat email
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    messages.error(request, _('Email %s already exists!') % email)
                     return redirect('register')
                 else:
                     # jeigu viskas tvarkoje, sukuriame naują vartotoją
                     User.objects.create_user(username=username, email=email, password=password)
-                    messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    messages.info(request, _('User %s successfully registered!') % username)
                     return redirect('login')
         else:
-            messages.error(request, 'Slaptažodžiai nesutampa!')
+            messages.error(request, _('Passwords do not match!'))
             return redirect('register')
     return render(request, 'register.html')
 
@@ -174,7 +175,7 @@ def profilis(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f"Profilis atnaujintas")
+            messages.success(request, _('Account info updated.'))
             return redirect('profilis')
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -222,23 +223,3 @@ class UzsakymasDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.Delet
     def test_func(self):
         uzsakymas = self.get_object()
         return self.request.user == uzsakymas.vartotojas
-
-
-# class UzsakymoEiluteDetailView(LoginRequiredMixin, generic.DetailView):
-#     model = UzsakymoEilute
-#     template_name = 'eilute.html'
-#     context_object_name = 'uzsakymo_eilute'
-#
-#
-# class UzsakymoEiluteCreateView(LoginRequiredMixin, generic.CreateView):
-#     model = UzsakymoEilute
-#     success_url = "/autoservisas/manouzsakymoeilute/"
-#     template_name = 'uzsakymo_eilute.html'
-#     form_class = UzsakymoEiluteForm
-#
-#     def form_valid(self, form):
-#         form.instance.reader = User.objects.get(pk=self.kwargs['pk'])
-#         return super().form_valid(form)
-#
-#     def get_success_url(self):
-#         return reverse('uzsakymas', kwargs={'pk': self.object.id})

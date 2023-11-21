@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 
 <div class="card shadow-lg p-1 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
@@ -7,23 +7,23 @@
     <div class="container">
       <div class="row">
         <ul class="list-unstyled">
-            <li class="text-muted">Užsakymas Nr. {{uzsakymas.id}}</li>
+            <li class="text-muted">{% trans 'Order # ' %}{{uzsakymas.id}}</li>
             <li class="text-black">{{uzsakymas.automobilis_id.klientas}}</li>
             <li class="text-black">{{uzsakymas.data|date:"Y-m-d"}}</li>
             <li class="text-black {% if uzsakymas.statusas == 'u' %}text-success{% elif uzsakymas.statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{uzsakymas.get_statusas_display}}</li>
-            <li class="text-black mt-3"><span class="text-muted">Valst. Nr.: </span>{{uzsakymas.automobilis_id.valstybinis_nr}}</li>
-            <li class="text-black"><span class="text-muted">Modelis: </span>{{uzsakymas.automobilis_id.automobilio_modelis_id}}</li>
-            <li class="text-black"><span class="text-muted">VIN: </span>{{uzsakymas.automobilis_id.vin_kodas}}</li>
+            <li class="text-black mt-3"><span class="text-muted">{% trans 'Plate #: ' %}</span>{{uzsakymas.automobilis_id.valstybinis_nr}}</li>
+            <li class="text-black"><span class="text-muted">{% trans 'Model: ' %}</span>{{uzsakymas.automobilis_id.automobilio_modelis_id}}</li>
+            <li class="text-black"><span class="text-muted">{% trans 'VIN: ' %}</span>{{uzsakymas.automobilis_id.vin_kodas}}</li>
         </ul>
       </div>
       <div class="mt-5">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Paslaugos pavadinimas</th>
-                    <th scope="col" class="text-center">Kaina</th>
-                    <th scope="col" class="text-center">Kiekis</th>
-                    <th scope="col" class="text-center">Viso</th>
+                    <th scope="col">{% trans 'Service name' %}</th>
+                    <th scope="col" class="text-center">{% trans 'Price' %}</th>
+                    <th scope="col" class="text-center">{% trans 'Amount' %}</th>
+                    <th scope="col" class="text-center">{% trans 'Total' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
                 </tr>
             {% endfor %}
                 <tr>
-                    <th colspan="3" scope="col" class="text-right text-muted">IŠ VISO:</th>
+                    <th colspan="3" scope="col" class="text-right text-muted">{% trans 'TOTAL:' %}</th>
                     <th class="text-center text-muted">{{uzsakymas.is_viso}}</th>
                 </tr>
             </tbody>
@@ -44,13 +44,13 @@
       </div>
     </div>
   </div>
-    <a class="nav-link text-primary" href="#" onClick="history.go(-1)"><<< Atgal</a>
+    <a class="nav-link text-primary" href="#" onClick="history.go(-1)">{% trans '<<< Back' %}</a>
 
             {% if object.vartotojas == user %}
             <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'nauja_uzsakymo_eilute' %}">Pridėti paslaugą</a>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'uzsakymas_update' object.id %}">Redaguoti</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'uzsakymas_delete' object.id %}">Ištrinti</a>
+
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'uzsakymas_update' object.id %}">{% trans 'Edit/update' %}</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'uzsakymas_delete' object.id %}">{% trans 'Delete' %}</a>
             </div>
             {% endif %}
 
@@ -59,7 +59,7 @@
 <div class="card shadow-lg p-0 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
     <div class="row px-3">
         <div class="col-md-6 p-3">
-            <h5>Kliento atsiliepimai:</h5>
+            <h5>{% trans 'Client comments:' %}</h5>
             {% if uzsakymas.uzsakymasreview_set.all %}
             {% for review in uzsakymas.uzsakymasreview_set.all %}
                 {% if review.reviewer.username == 'admin' %}
@@ -87,20 +87,20 @@
                 {% endif %}
                 {% endfor %}
             {% else %}
-            <p>Užsakymas neturi atsiliepimų</p>
+            <p>{% trans 'There are no comments' %}</p>
             {% endif %}
         </div>
         <div class="col-md-6 p-3">
             {% if user.is_authenticated and user == uzsakymas.vartotojas or user.username == 'admin' %}
-            <h5 class="mb-3">Palikite atsiliepimą:</h5>
+            <h5 class="mb-3">{% trans 'Leave comment:' %}</h5>
             <form action="" method="post">
             {% csrf_token %}
             {{ form.atsiliepimo_tekstas }}
-            <input type="submit" value="Išsaugoti" class="btn btn-secondary btn-md submit-button mt-2">
+            <input type="submit" value="{% trans 'Save' %}" class="btn btn-secondary btn-md submit-button mt-2">
             </form>
             {% else %}
             <div class="d-flex align-items-center justify-content-center p-0 m-0 h-100 w-100">
-                <h5 class="m-auto px-5 text-secondary">Atsiliepimus galima palikti tik prisijungus ir tik prie savo užsakymų.</h5>
+                <h5 class="m-auto px-5 text-secondary">{% trans 'Only logged in users can comment and only on own orders.' %}</h5>
             </div>
             {% endif %}
         </div>

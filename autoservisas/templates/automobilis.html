@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 {% load static %}
 
@@ -17,23 +17,23 @@
             <div class="col-md-6 my-auto border-left border-right border-success">
 
                 <ul class="list-unstyled">
-                    <li class="text-black"><span class="text-muted">Savininkas: </span>{{automobilis.klientas}}</li>
-                    <li class="text-black"><span class="text-muted">Valst. Nr.: </span>{{automobilis.valstybinis_nr}}</li>
-                    <li class="text-black"><span class="text-muted">Gamintojas: </span>{{automobilis.automobilio_modelis_id.marke}}</li>
-                    <li class="text-black"><span class="text-muted">Modelis: </span>{{automobilis.automobilio_modelis_id.modelis}}</li>
-                    <li class="text-black"><span class="text-muted">VIN kodas: </span>{{automobilis.vin_kodas}}</li>
+                    <li class="text-black"><span class="text-muted">{% trans 'Owner: ' %}</span>{{automobilis.klientas}}</li>
+                    <li class="text-black"><span class="text-muted">{% trans 'Plate #: ' %}</span>{{automobilis.valstybinis_nr}}</li>
+                    <li class="text-black"><span class="text-muted">{% trans 'Maker: ' %}</span>{{automobilis.automobilio_modelis_id.marke}}</li>
+                    <li class="text-black"><span class="text-muted">{% trans 'Model: ' %}</span>{{automobilis.automobilio_modelis_id.modelis}}</li>
+                    <li class="text-black"><span class="text-muted">{% trans 'VIN code: ' %}</span>{{automobilis.vin_kodas}}</li>
                 </ul>
             </div>
         </div>
         <div class="row">
             <div class="container mt-3">
-                <h5>Papildoma informacija:</h5>
+                <h5>{% trans 'More info:' %}</h5>
                 <p>{{ automobilis.aprasymas | safe }}</p>
             </div>
         </div>
         <div class="row">
             <div class="container">
-                <a class="nav-link text-secondary float-right" href="#" onClick="history.go(-1)"><<< Atgal</a>
+                <a class="nav-link text-secondary float-right" href="#" onClick="history.go(-1)">{% trans '<<< Back' %}</a>
             </div>
         </div>
     </div>

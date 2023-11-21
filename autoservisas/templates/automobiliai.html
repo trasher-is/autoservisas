@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 {% load static %}
 
-<h1 class="text-uppercase h1p">Automobiliai</h1>
+<h1 class="text-uppercase h1p">{% trans 'Cars' %}</h1>
 
-<!--<div class="card p-3" style="background-color: rgba(245, 245, 245, 0.9);">-->
+
   <div class="row">
     {% for a in visi_automobiliai %}
     <div class="col-md-3 px-2 pb-3">
@@ -22,7 +22,7 @@
           </h3>
           <p class="card-text">{{a.automobilio_modelis_id}}</p>
           <p class="{% if a.auto_statusas.first.statusas == 'u' %}text-success{% elif a.auto_statusas.first.statusas == 'x' %}text-danger{% else %}text-primary{% endif %}">{{ a.auto_statusas.first.get_statusas_display }}</p>
-          <a href="{% url 'automobilis' a.id %}"><button type="button" class="btn btn-secondary btn-sm">Detaliau</button></a>
+          <a href="{% url 'automobilis' a.id %}"><button type="button" class="btn btn-secondary btn-sm">{% trans 'Details' %}</button></a>
         </div>
       </div>
     </div>
@@ -34,11 +34,11 @@
       <ul class="pagination m-0">
         {% if visi_automobiliai.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ visi_automobiliai.previous_page_number }}">Atgal</a>
+            <a class="page-link" href="?page={{ visi_automobiliai.previous_page_number }}">{% trans 'Back' %}</a>
           </li>
         {% else %}
           <li class="page-item">
-            <a class="page-link disabled">Atgal</a>
+            <a class="page-link disabled">{% trans 'Back' %}</a>
           </li>
         {% endif %}
 
@@ -56,15 +56,15 @@
 
         {% if visi_automobiliai.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ visi_automobiliai.next_page_number }}">Toliau</a>
+            <a class="page-link" href="?page={{ visi_automobiliai.next_page_number }}">{% trans 'Next' %}</a>
           </li>
         {% else %}
           <li class="page-item">
-            <a class="page-link disabled">Toliau</a>
+            <a class="page-link disabled">{% trans 'Next' %}</a>
           </li>
         {% endif %}
       </ul>
     </nav>
   </div>
-<!--</div>-->
+
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 
 <div class="row justify-content-center mt-5">
-  <h1 class="text-uppercase h1p">Sėkmingai atsijungėte!</h1>
+  <h1 class="text-uppercase h1p">{% trans 'Successful logout!' %}</h1>
 </div>
 <div class="row justify-content-center mt-2">
-  <a href="{% url 'login' %}"><button type="button" class="btn btn-secondary btn-md">Prisijungti iš naujo.</button></a>
+  <a href="{% url 'login' %}"><button type="button" class="btn btn-secondary btn-md">{% trans 'Login again.' %}</button></a>
 </div>
 {% endblock %}

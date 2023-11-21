@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -17,8 +17,5 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('register/', views.register, name='register'),
     path('profilis/', views.profilis, name='profilis'),
-    # path('uzsakymo_eilute/<int:pk>', views.UzsakymoEiluteDetailView.as_view(), name='uzsakymo_eilute'),
-    # path('uzsakymo_eilute/new', views.UzsakymoEiluteCreateView.as_view(), name='nauja_uzsakymo_eilute'),
-    # path('uzsakymo_eilute/<int:pk>/update', views.UzsakymoEiluteUpdateView.as_view(), name='uzsakymo_eilute_update'),
-    # path('uzsakymo_eilute/<int:pk>/delete', views.UzsakymoEiluteDeleteView.as_view(), name='uzsakymo_eilute_delete'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
