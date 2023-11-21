@@ -37,3 +37,5 @@ added lessons 1 to 8 all together
   - admin can comment on all orders
   - admins comments are css aligned right
 - added profile picture to 'automobilis' template (bad css styling need to learn how to do that without absolute positioning)
+
+## finished
