@@ -45,6 +45,15 @@
     </div>
   </div>
     <a class="nav-link text-primary" href="#" onClick="history.go(-1)"><<< Atgal</a>
+
+            {% if object.vartotojas == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'nauja_uzsakymo_eilute' %}">Pridėti paslaugą</a>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'uzsakymas_update' object.id %}">Redaguoti</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'uzsakymas_delete' object.id %}">Ištrinti</a>
+            </div>
+            {% endif %}
+
 </div>
 
 <div class="card shadow-lg p-0 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">

@@ -2,17 +2,16 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 
 # Create your views here.
-from .models import Automobilis, Uzsakymas, Paslauga, Profilis
-from .forms import UzsakymasReviewForm, UserUpdateForm, ProfilisUpdateForm
+from .models import Automobilis, Uzsakymas, Paslauga, UzsakymoEilute
+from .forms import UzsakymasReviewForm, UserUpdateForm, ProfilisUpdateForm, UzsakymasCreateForm, UzsakymoEiluteForm
 
 
 def index(request):
@@ -135,7 +134,7 @@ def register(request):
     return render(request, 'register.html')
 
 
-class UzsakymasDetailView(FormMixin, generic.DetailView):
+class UzsakymasDetailView(FormMixin, LoginRequiredMixin, generic.DetailView):
     model = Uzsakymas
     template_name = 'uzsakymas.html'
     context_object_name = 'uzsakymas'
@@ -162,7 +161,6 @@ class UzsakymasDetailView(FormMixin, generic.DetailView):
         return super(UzsakymasDetailView, self).form_valid(form)
 
 
-
 @login_required
 def profilis(request):
     return render(request, 'profilis.html')
@@ -187,3 +185,60 @@ def profilis(request):
         'p_form': p_form,
     }
     return render(request, 'profilis.html', context)
+
+
+class UzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Uzsakymas
+    success_url = "/autoservisas/manouzsakymai/"
+    template_name = 'uzsakymo_forma.html'
+    form_class = UzsakymasCreateForm
+    context_object_name = 'uzsakymo_kurimas'
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        return super().form_valid(form)
+
+
+class UzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Uzsakymas
+    success_url = "/autoservisas/manouzsakymai/"
+    template_name = 'uzsakymo_forma.html'
+    form_class = UzsakymasCreateForm
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.vartotojas
+
+
+class UzsakymasDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Uzsakymas
+    success_url = "/autoservisas/manouzsakymai/"
+    template_name = 'uzsakymo_trynimas.html'
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.vartotojas
+
+
+# class UzsakymoEiluteDetailView(LoginRequiredMixin, generic.DetailView):
+#     model = UzsakymoEilute
+#     template_name = 'eilute.html'
+#     context_object_name = 'uzsakymo_eilute'
+#
+#
+# class UzsakymoEiluteCreateView(LoginRequiredMixin, generic.CreateView):
+#     model = UzsakymoEilute
+#     success_url = "/autoservisas/manouzsakymoeilute/"
+#     template_name = 'uzsakymo_eilute.html'
+#     form_class = UzsakymoEiluteForm
+#
+#     def form_valid(self, form):
+#         form.instance.reader = User.objects.get(pk=self.kwargs['pk'])
+#         return super().form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse('uzsakymas', kwargs={'pk': self.object.id})

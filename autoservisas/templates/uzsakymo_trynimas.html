@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-uppercase h1p">Užsakymas</h1>
+<div class="card shadow-lg p-1 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
+    <div class="container justify-content-center my-5">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <h2>Ar tikrai norite ištrinti užsakymą <strong>#{{ object.id }} - {{ object.automobilis_id }}?</strong></h2>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-danger" type="submit">Taip, ištrinti</button>
+            <button type="submit" class="btn btn-secondary btn-md register-button" href="{% url 'uzsakymas' object.id %}">Atšaukti</button>
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock content %}

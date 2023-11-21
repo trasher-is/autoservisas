@@ -43,7 +43,7 @@ class Automobilis(models.Model):
 
 class Uzsakymas(models.Model):
     # uzsakymas kuriame gali buti daug uzsakymo eiluciu
-    data = models.DateField('Užsakymo data', null=False)
+    data = models.DateField('Užsakymo data', default=date.today, null=False)
     automobilis_id = models.ForeignKey('Automobilis', verbose_name='Informacija',
                                        on_delete=models.CASCADE, null=False, related_name='auto_statusas')
 

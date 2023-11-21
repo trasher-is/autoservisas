@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card shadow-lg p-1 m-5 rounded" style="background-color: rgba(245, 245, 245, 0.9);">
+  <div class="card-body mx-4">
+    <div class="container">
+      <div class="mt-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Paslaugos pavadinimas</th>
+                    <th scope="col" class="text-center">Kaina</th>
+                    <th scope="col" class="text-center">Kiekis</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>{{ uzsakymo_eilute.paslauga_id.pavadinimas }}</td>
+                    <td class="text-center">{{ uzsakymo_eilute.paslauga_id.kaina }}</td>
+                    <td class="text-center">{{ uzsakymo_eilute.kiekis}}</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

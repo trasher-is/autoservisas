@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UzsakymasReview, Profilis
+from .models import UzsakymasReview, Profilis, Uzsakymas, UzsakymoEilute
 
 class UzsakymasReviewForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,21 @@ class ProfilisUpdateForm(forms.ModelForm):
     class Meta:
         model = Profilis
         fields = ['nuotrauka']
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class UzsakymasCreateForm(forms.ModelForm):
+    class Meta:
+        model = Uzsakymas
+        fields = ['vartotojas', 'automobilis_id', 'grazinimo_terminas']
+        widgets = {'vartotojas': forms.HiddenInput(), 'grazinimo_terminas': DateInput()}
+
+
+class UzsakymoEiluteForm(forms.ModelForm):
+    class Meta:
+        model = UzsakymoEilute
+        fields = ['paslauga_id', 'kiekis', 'uzsakymas_id']
+        widgets = {'uzsakymas_id': forms.HiddenInput()}
