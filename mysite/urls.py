@@ -26,5 +26,6 @@ urlpatterns = [
     path('', RedirectView.as_view(url='autoservisas/', permanent=True)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('tinymce/', include('tinymce.urls')),
+    path('api/', include('api.urls'))
 ] + (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
     static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
