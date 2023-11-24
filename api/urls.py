@@ -1,7 +1,12 @@
 from django.urls import path, include
-from .views import AlbumList, AlbumReviewList
+from .views import AlbumReviewList, AlbumReviewDetail, AlbumReviewCommentList, AlbumReviewCommentDetail
+
 
 urlpatterns = [
-    path('albums', AlbumList.as_view()),
-    path('albums-review', AlbumReviewList.as_view()),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('review', AlbumReviewList.as_view()),
+    path('reviews/<int:pk>', AlbumReviewDetail.as_view()),
+    path('reviews/<int:pk>/comments', AlbumReviewCommentList.as_view()),
+    path('comments/<int:pk>', AlbumReviewCommentDetail.as_view())
+
 ]

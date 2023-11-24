@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Band, Album, Song, AlbumReview, AlbumReviewLike
+from .models import Band, Album, Song, AlbumReview, AlbumReviewComment, AlbumReviewLike
 
 
 class BandAdmin(admin.ModelAdmin):
@@ -28,3 +28,4 @@ admin.site.register(Album, AlbumAdmin)
 admin.site.register(Song, SongAdmin)
 admin.site.register(AlbumReview, AlbumReviewAdmin)
 admin.site.register(AlbumReviewLike, AlbumReviewLikeAdmin)
+admin.site.register(AlbumReviewComment)
